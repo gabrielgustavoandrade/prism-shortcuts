@@ -1,0 +1,67 @@
+{
+  "manifest_version": 3,
+  "name": "Prism Shortcuts",
+  "version": "2.0",
+  "description": "Fast keyboard shortcuts, peek, and Lens navigation for Chrome",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "clipboardWrite",
+    "offscreen",
+    "tabs",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["peek.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "commands": {
+    "copy-url": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Comma",
+        "mac": "Command+Shift+Comma"
+      },
+      "description": "Copy URL"
+    },
+    "copy-markdown": {
+      "description": "Copy as Markdown link"
+    },
+    "copy-clean": {
+      "description": "Copy clean URL (no tracking params)"
+    },
+    "close-unpinned": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+K",
+        "mac": "MacCtrl+Shift+K"
+      },
+      "description": "Close all unpinned tabs"
+    },
+    "close-duplicates": {
+      "description": "Close duplicate tabs"
+    },
+    "pin-tab": {
+      "description": "Pin or unpin current tab"
+    },
+    "open-lens": {
+      "description": "Open Lens window"
+    }
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
