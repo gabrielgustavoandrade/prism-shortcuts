@@ -2,4 +2,5 @@
 .playwright-mcp/
 tmp-*
 prism-*.png
+store-assets/
 *.zip

@@ -152,21 +152,15 @@ async function renderShortcuts() {
 }
 
 async function renderSettings() {
-  const defaults = { stripTracking: false, peekEnabled: true };
+  const defaults = { stripTracking: false };
   const settings = await chrome.storage.sync.get(defaults);
 
   const stripEl = document.getElementById("stripTracking");
-  const peekEl = document.getElementById("peekEnabled");
 
   stripEl.checked = settings.stripTracking;
-  peekEl.checked = settings.peekEnabled;
 
   stripEl.addEventListener("change", () => {
     chrome.storage.sync.set({ stripTracking: stripEl.checked });
-  });
-
-  peekEl.addEventListener("change", () => {
-    chrome.storage.sync.set({ peekEnabled: peekEl.checked });
   });
 }
 

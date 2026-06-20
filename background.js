@@ -1,4 +1,4 @@
-const DEFAULT_SETTINGS = { stripTracking: false, peekEnabled: true };
+const DEFAULT_SETTINGS = { stripTracking: false };
 
 const TRACKING_PARAMS = [
   "utm_source",
@@ -71,15 +71,6 @@ function isRestricted(url) {
     url?.startsWith("chrome-extension://") ||
     url?.startsWith("about:")
   );
-}
-
-function isAllowedPeekUrl(url) {
-  try {
-    const parsed = new URL(url);
-    return parsed.protocol === "http:" || parsed.protocol === "https:";
-  } catch {
-    return false;
-  }
 }
 
 function clearUndo() {
@@ -428,21 +419,6 @@ async function handleOpenLens(tab) {
 
 chrome.runtime.onMessage.addListener((msg, sender) => {
   if (!msg || typeof msg !== "object") return;
-
-  if (msg.type === "peek") {
-    if (!sender.tab || !isAllowedPeekUrl(msg.url)) return;
-
-    chrome.windows.get(sender.tab.windowId, (win) => {
-      if (chrome.runtime.lastError || !win) return;
-
-      const width = 480;
-      const height = 720;
-      const left = Math.round(win.left + win.width - width - 40);
-      const top = Math.round(win.top + (win.height - height) / 2);
-      chrome.windows.create({ url: msg.url, type: "popup", width, height, left, top });
-    });
-    return;
-  }
 
   if (msg.type === "undo-close") {
     if (closedTabsForUndo.length === 0) return;
